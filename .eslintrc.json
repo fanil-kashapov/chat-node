@@ -1,0 +1,31 @@
+{
+    "extends": [
+        "airbnb",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
+    "env": {
+        // I write for browser
+        "browser": true,
+        // in CommonJS
+        "node": true
+    },
+    // To give you an idea how to override rule options:
+    "rules": {
+        // Tons of rules you can use, for example...
+        "quotes": [1, "double"],
+        "import/no-unresolved": [2, { "commonjs": true, "amd": true}],
+        "import/named": 2,
+        "import/namespace": 2,
+        "import/default": 2,
+        "import/export": 2,
+        "indent": [
+            0,
+            "tab"
+        ]
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "import"
+    ]
+}
