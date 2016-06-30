@@ -13,6 +13,7 @@
   "author": "Fanil.Kashapov",
   "license": "ISC",
   "devDependencies": {
+    "babel-eslint": "^6.1.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
