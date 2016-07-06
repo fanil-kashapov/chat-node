@@ -1,12 +1,15 @@
-var Message = require("./model/Message");
+var Message = require("./model/Message"),
+    io = require("socket.io");
 
-module.exports = function (io, socket) {
+module.exports = function (http) {
+    const ioSrv = io.listen(http);
+
     // Listen for connection
-    io.on("connection", () => {
+    ioSrv.on("connection", (socket) => {
         // Globals
         // var defaultRoom = "general";
         // var rooms = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
-        var users = [];
+        var users = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
 
         // Emit the rooms array
         socket.emit("init", {

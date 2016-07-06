@@ -8,6 +8,7 @@
     <style>
         body        { padding-top:80px; }
     </style>
+    <script type="text/javascript" src="public/vendor/socket.io/socket.io.js"></script>
 </head>
 <body>
 <div class="container">
@@ -25,6 +26,25 @@
         <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
     </div>
 
+    <ul id="users"></ul>
+
 </div>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var socket = io.connect(window.location.origin);
+        $('form').submit(function(){
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+
+        socket.on('init', function(data){
+            $('#users').append($('<li>').text(data.users));
+        });
+
+        socket.on('chat message', function(msg){
+            $('#messages').append($('<li>').text(msg));
+        });
+    </script>
 </body>
 </html>

@@ -23,7 +23,6 @@
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.9.2",
     "eslint-plugin-jsx-a11y": "^1.5.3",
-    "eslint-plugin-react": "^5.2.2",
     "express": "^4.14.0",
     "express-session": "^1.13.0",
     "http": "0.0.0",
@@ -37,5 +36,36 @@
     "passport-linkedin": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "socket.io": "^1.4.8"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "html",
+        "extensions": [
+          ".html",
+          ".htm",
+          ".shtml",
+          ".mdoc",
+          ".jsp",
+          ".asp",
+          ".aspx",
+          ".jshtm",
+          ".ejs"
+        ],
+        "aliases": [
+          "HTML",
+          "htm",
+          "html",
+          "xhtml",
+          "ejs"
+        ],
+        "mimetypes": [
+          "text/html",
+          "text/x-jshtm",
+          "text/template",
+          "text/ng-template"
+        ]
+      }
+    ]
   }
 }

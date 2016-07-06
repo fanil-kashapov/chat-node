@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+var mongoose = require("mongoose");
 
 // create a schema for chat
 const messageSchema = mongoose.Schema({
         created: Date,
         message: String,
-        username: String,
+        username: String
        // room: String
     });
 
