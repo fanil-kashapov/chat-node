@@ -1,5 +1,6 @@
 var Message = require("./model/Message"),
-    io = require("socket.io");
+    io = require("socket.io"),
+    User = require("./model/User.js");
 
 module.exports = function (http) {
     const ioSrv = io.listen(http);
@@ -9,7 +10,11 @@ module.exports = function (http) {
         // Globals
         // var defaultRoom = "general";
         // var rooms = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
-        var users = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
+        var users = User.find({}, function (err, user) {
+            if (err) return console.error(err);
+
+            return user;
+        })
 
         // Emit the rooms array
         socket.emit("init", {
