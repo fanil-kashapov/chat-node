@@ -9,12 +9,12 @@ module.exports = function (http) {
     ioSrv.on("connection", (socket) => {
         // Globals
         // var defaultRoom = "general";
-        // var rooms = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
-        var users = User.find({}, function (err, user) {
-            if (err) return console.error(err);
+        var users = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
+        // var users = User.find({}, function (err, user) {
+        //     if (err) return console.error(err);
 
-            return user;
-        })
+        //     return user;
+        // })
 
         // Emit the rooms array
         socket.emit("init", {
