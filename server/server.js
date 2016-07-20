@@ -1,37 +1,20 @@
 
-'use strict'
+"use strict";
 // set up ======================================================================
 // get all the tools we need
 var express = require("express"),
     app = express(),
     port = process.env.PORT || 3000,
-    mongoose = require("mongoose"),
-    passport = require("passport"),
     flash = require("connect-flash"),
 
-    morgan = require("morgan"),
     cookieParser = require("cookie-parser"),
     bodyParser = require("body-parser"),
-    session = require("express-session"),
 
-    configDB = require("./config/dbConfig.js"),
     http = require("http").createServer(app),
-    io = require('./lib/socket.js')(http);
+    io = require("./lib/socket.js")(http);
 
 
 // configuration ===============================================================
-mongoose.connect(configDB.local); // connect to our database
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-  // we're connected!
-  console.log("connection:");
-});
-
-require("./lib/passport")(passport); // pass passport for configuration
-
-// set up our express application
-app.use(morgan("dev")); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 
 app.use(bodyParser.urlencoded({
@@ -39,12 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json()); // get information from html forms
 
-// Specify the views folder
-app.set("views", `${__dirname}/views`);
-
-app.set("view engine", "ejs"); // set up ejs for templating
-
-app.use('/public', express.static('public'));
+app.use("/public", express.static("public"));
 // allow CORS
 // app.all("*", function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -57,17 +35,31 @@ app.use('/public', express.static('public'));
 //   }
 // });
 
-// required for passport
-app.use(session({ secret: "keyboard cat", key: "sid", cookie: { secure: false } })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
-
 // routes ======================================================================
 require("./lib/routes.js")(app, passport); // load our routes and pass in our app and fully configured passport
 
-// launch ======================================================================
-// app.listen(port);
+
+// POST method to create a chat message
+app.post("/message", function (request, response) {
+
+  // The request body expects a param named "message"
+  var message = request.body.message;
+
+  // If the message is empty or wasn't sent it's a bad request
+  if (_.isUndefined(message) || _.isEmpty(message.trim())) {
+    return response.json(400, { error: "Message is invalid" });
+  }
+
+  // We also expect the sender's name with the message
+  var name = request.body.name;
+
+  // Let our chatroom know there was a new message
+  io.sockets.emit("incomingMessage", { message: message, name: name });
+
+  // Looks good, let the client know
+  response.json(200, { message: "Message received" });
+
+});
 
 
 // Start the http server at port and IP defined before

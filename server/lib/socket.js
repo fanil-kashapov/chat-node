@@ -4,13 +4,14 @@ var Message = require("./model/Message"),
 
 module.exports = function (http) {
     const ioSrv = io.listen(http);
+    var users = [];
 
     // Listen for connection
     ioSrv.on("connection", (socket) => {
         // Globals
         // var defaultRoom = "general";
-        var users = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
-        // var users = User.find({}, function (err, user) {
+       //var users = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
+        
         //     if (err) return console.error(err);
 
         //     return user;
@@ -24,6 +25,7 @@ module.exports = function (http) {
         // Listens for new user
         socket.on("new user", (data) => {
             // Tell all those in the room that a new user joined
+            users.push(data);
             io.emit("user joined", data);
         });
 

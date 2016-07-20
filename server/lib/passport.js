@@ -35,7 +35,7 @@ module.exports = function (passport) {
         // asynchronous
         process.nextTick(function () {
             // find the user in the database based on their facebook id
-            User.findOne({ "facebook.id": profile.id }, function (err, user) {
+            User.findOne({ "id": profile.id }, function (err, user) {
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
                 if (err) {
@@ -50,10 +50,10 @@ module.exports = function (passport) {
                     var newUser = new User();
 
                     // set all of the facebook information in our user model
-                    newUser.facebook.id = profile.id; // set the users facebook id
-                    newUser.facebook.token = token; // we will save the token that facebook provides to the user
-                    newUser.facebook.name = `${profile.name.givenName} ${profile.name.familyName}`; // look at the passport user profile to see how names are returned
-                    newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+                    newUser.id = profile.id; // set the users facebook id
+                    newUser.token = token; // we will save the token that facebook provides to the user
+                    newUser.email = `${profile.name.givenName} ${profile.name.familyName}`; // look at the passport user profile to see how names are returned
+                    newUser.name = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
 
                     // save our user to the database
                     newUser.save(function (err) {
@@ -84,7 +84,7 @@ module.exports = function (passport) {
         // User.findOne won't fire until we have all our data back from Twitter
         process.nextTick(function () {
 
-            User.findOne({ "twitter.id": profile.id }, function (err, user) {
+            User.findOne({ "id": profile.id }, function (err, user) {
 
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
@@ -100,10 +100,10 @@ module.exports = function (passport) {
                     var newUser = new User();
 
                     // set all of the user data that we need
-                    newUser.twitter.id = profile.id;
-                    newUser.twitter.token = token;
-                    newUser.twitter.username = profile.username;
-                    newUser.twitter.displayName = profile.displayName;
+                    newUser.id = profile.id;
+                    newUser.token = token;
+                    newUser.name = profile.username;
+                    newUser.email = profile.displayName;
 
                     // save our user into the database
                     newUser.save(function (err) {
@@ -130,7 +130,7 @@ module.exports = function (passport) {
         // make the code asynchronous
         // User.findOne won't fire until we have all our data back from LINKEDIN
         process.nextTick(function () {
-            User.findOne({ "linkedIn.id": profile.id }, function (err, user) {
+            User.findOne({ "id": profile.id }, function (err, user) {
 
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
@@ -146,10 +146,10 @@ module.exports = function (passport) {
                     var newUser = new User();
 
                     // set all of the user data that we need
-                    newUser.linkedin.id = profile.id;
-                    newUser.linkedin.token = token;
-                    newUser.linkedin.username = profile.name.familyName;
-                    newUser.linkedin.displayName = profile.displayName;
+                    newUser.id = profile.id;
+                    newUser.token = token;
+                    newUser.name = profile.name.familyName;
+                    newUser.email = profile.displayName;
 
                     // save our user into the database
                     newUser.save(function (err) {
