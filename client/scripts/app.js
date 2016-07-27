@@ -1,29 +1,15 @@
-var app = angular.module('chatApp', ['ui.router'])
-  .config(function ($stateProvider, $urlRouterProvider) {
-    $stateProvider
+var app = angular.module('chatApp', ['ui.router', 'satellizer'])
+  .config(function ($stateProvider, $authProvider) {
+      $stateProvider
       .state('home', {
-        url: '/',
-        templateUrl: 'views/home.html',
-        resolve: {
-          requireNoAuth: function($state, Auth){
-            return Auth.auth.$requireAuth().then(function(auth){
-              $state.go('channels');
-            }, function(error){
-              return;
-            });
-          }
-        }
+          url: '/',
+          templateUrl: 'tpl-home',
+          controller: 'ChatCtrl as chatCtrl'
       })
-      .state('login', {
-        requireNoAuth: function ($state, Auth) {
-          return Auth.auth.$requireAuth().then(function (auth) {
-            $state.go('home')
-          }, function (error) {
-            return
-          })
-        },
-        url: '/login',
-        controller: 'AuthCtrl as authCtrl',
-        templateUrl: 'views/login.html'
-      })
+      .state('singin', {
+          url: '/login',
+          controller: 'AuthCtrl as authCtrl',
+          templateUrl: 'tpl-singin'
+      });
+  });
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('MarsConstans').constant('CONTSANT', {
+app.constant('CONTSANT', {
     SOCIAL: {
         FACEBOOK: {
             APP_ID: '1765321937087529',

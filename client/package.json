@@ -13,8 +13,10 @@
   "author": "Fanil.Kashapov",
   "license": "ISC",
   "devDependencies": {
+    "angular-ui-router": "^0.3.1",
     "eslint": "^3.1.1",
     "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-react": "^5.2.2"
+    "eslint-plugin-react": "^5.2.2",
+    "satellizer": "^0.15.4"
   }
 }
