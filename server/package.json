@@ -12,5 +12,18 @@
     "oauth"
   ],
   "author": "Fanil.Kashapov",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "cors": "^2.7.1",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.14.1",
+    "mongoose": "^4.5.8",
+    "morgan": "^1.7.0",
+    "request": "^2.74.0",
+    "socket.io": "^1.4.8"
+  }
 }

@@ -1,6 +1,11 @@
 'use strict';
 
 app.factory('chatSocket', function (socketFactory) {
-    var socket = socketFactory();
-    return socket;
+    var myIoSocket = io.connect('localhost:8080');
+
+    var mySocket = socketFactory({
+        ioSocket: myIoSocket
+    });
+
+    return mySocket;
 });
