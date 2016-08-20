@@ -1,7 +1,13 @@
-app.factory('TimeAgo', TimeAgoServise);
-function TimeAgoServise () {
-    function timeAgo (date) {
-        var messageTime = new Date(date),
+'use strict';
+
+var moduleName = 'chatApp.timeAgo';
+
+class TimeAgo {
+    constructor () {
+    }
+
+    static timeAgo (date) {
+        let messageTime = new Date(date),
             cur_time = new Date(),
             time_elapsed = (cur_time - messageTime) / 1000,
             $seconds = time_elapsed,
@@ -69,7 +75,35 @@ function TimeAgoServise () {
         }
     }
 
-    return {
-        timeAgo: timeAgo
-    };
+    static TimeAgoFactory () {
+        return new TimeAgo();
+    }
 }
+
+angular.module(moduleName, [])
+   .factory('TimeAgo', TimeAgo.TimeAgoFactory);
+
+export default moduleName;
+
+// app.factory('TimeAgo', TimeAgoServise);
+// function TimeAgoServise () {
+//     function timeAgo (date) {
+//         var messageTime = new Date(date),
+//             cur_time = new Date(),
+//             time_elapsed = (cur_time - messageTime) / 1000,
+//             $seconds = time_elapsed,
+//             $minutes = Math.round(time_elapsed / 60 ),
+//             $hours = Math.round(time_elapsed / 3600),
+//             $days = Math.round(time_elapsed / 86400 ),
+//             $weeks = Math.round(time_elapsed / 604800),
+//             $months = Math.round(time_elapsed / 2600640 ),
+//             $years = Math.round(time_elapsed / 31207680 );
+
+        
+//     }
+
+//     return {
+//         timeAgo: timeAgo
+//     };
+// }
+

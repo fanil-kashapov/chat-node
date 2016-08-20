@@ -11,6 +11,11 @@ module.exports = function (socket) {
 //     });
 
   // broadcast a user's message to other users
+  //Emit the rooms array
+    socket.emit('setup', {
+        rooms: rooms
+    });
+
     socket.on('message', function (data) {
       console.log(data);
         socket.broadcast.emit('message', {

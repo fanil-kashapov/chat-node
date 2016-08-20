@@ -586,6 +586,6 @@ app.post('/auth/unlink', ensureAuthenticated, function(req, res) {
  */
 var server = http.createServer(app).listen(8080),
     
-    io = require('socket.io').listen(server);
+io = require('socket.io').listen(server);
 io.sockets.on('connection', socket);
 console.log('Server running on 8080...');

@@ -1,4 +1,19 @@
-var app = angular.module('chatApp', ['ui.router', 'satellizer', 'btford.socket-io']);
+'use strict';
+
+import './../node_modules/angular';
+import './../node_modules/angular-ui-router';
+import './../node_modules/satellizer';
+import './../node_modules/angular-socket-io';
+
+import ChatCtrl from './app/controllers/chatCtrl';
+import AuthCtrl from './app/controllers/authCtrl';
+
+import { default as chatAppTimeAgo } from './app/services/factories';
+import { default as chatAppSocket } from './app/services/socket';
+
+var moduleName = 'chatApp';
+
+var app = angular.module(moduleName, ['ui.router', 'satellizer', 'btford.socket-io',chatAppSocket, chatAppTimeAgo, ChatCtrl, AuthCtrl]);
 
 app.config(function ($stateProvider, $authProvider, $urlRouterProvider) {
     $authProvider.facebook({
@@ -68,9 +83,10 @@ app.config(function ($stateProvider, $authProvider, $urlRouterProvider) {
 
     $stateProvider
     .state('/', {
-        controller: 'ChatCtrl as chatCtrl',
+        controller: 'ChatCtrl',
+        controllerAs:'chatCtrl',
         url: '/',
-        templateUrl: '/scripts/app/templates/tpl-chat.html',
+        templateUrl: '../src/app/templates/tpl-chat.html',
         onEnter: ['$state', '$auth', function($state, $auth) {
             if (!$auth.isAuthenticated())
                 $state.go('singin');
@@ -78,8 +94,9 @@ app.config(function ($stateProvider, $authProvider, $urlRouterProvider) {
     })
     .state('singin', {
         url: '/singin',
-        controller: 'AuthCtrl as authCtrl',
-        templateUrl: 'tpl-singin.html'
+        controller: 'AuthCtrl',
+        controllerAs:'vm',
+        templateUrl: '../src/app/templates/tpl-singin.html'
     });
 
     $urlRouterProvider.otherwise('/');
