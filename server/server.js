@@ -1,16 +1,3 @@
-// var connect = require('connect');
-// var serveStatic = require('serve-static');
-// connect().use(serveStatic(__dirname)).listen(3000, function(){
-//     console.log('Server running on 8080...');
-// });
-
-
-/**
- * Satellizer Node.js Example
- * (c) 2015 Sahat Yalkabov
- * License: MIT
- */
-
 var qs = require('querystring'),
     http = require('http'),
     bcrypt = require('bcryptjs'),
@@ -91,8 +78,6 @@ if (app.get('env') === 'production') {
 }
 app.use(express.static(__dirname));
 
-
-
 /*
  |--------------------------------------------------------------------------
  | Login Required Middleware
@@ -132,35 +117,6 @@ function createJWT(user) {
     };
     return jwt.encode(payload, config.TOKEN_SECRET);
 }
-
-/*
- |--------------------------------------------------------------------------
- | GET /api/me
- |--------------------------------------------------------------------------
- */
-app.get('/api/me', ensureAuthenticated, function(req, res) {
-    User.findById(req.user, function(err, user) {
-        res.send(user);
-    });
-});
-
-/*
- |--------------------------------------------------------------------------
- | PUT /api/me
- |--------------------------------------------------------------------------
- */
-app.put('/api/me', ensureAuthenticated, function(req, res) {
-    User.findById(req.user, function(err, user) {
-        if (!user) {
-            return res.status(400).send({ message: 'User not found' });
-        }
-        user.displayName = req.body.displayName || user.displayName;
-        user.email = req.body.email || user.email;
-        user.save(function(err) {
-            res.status(200).end();
-        });
-    });
-});
 
 /*
  |--------------------------------------------------------------------------

@@ -1,28 +1,38 @@
 <div class=" col-lg-6 col-md-6 col-sm-6">
     <div class="chat-box-div">
         <div class="chat-box-head">
+            <a ng-click="chatCtrl.closeRoom(u)" ng-if="chatCtrl.isChatActive" class="btn btn-success">Leave chat</a>
         </div>
-        <div class="panel-body chat-box-main">
-            <div ng-repeat="m in chatCtrl.messages">
+        <div class="panel-body chat-box-main" ng-show="chatCtrl.isChatActive">
+            <div ng-repeat="m in chatCtrl.messages" class="bounceInUp">
                 <div ng-class="m.user._id == chatCtrl.user._id ? 'chat-box-right' : 'chat-box-left'">
                     {{m.message}}
                 </div>
                 <div ng-class="m.user._id == chatCtrl.user._id ? 'chat-box-name-right' : 'chat-box-name-left'">
-                    <img ng-src="{{m.user.picture}}" alt="bootstrap Chat box user image" class="img-circle chat-box-img" />
-                    {{m.user.displayName}}
+                    <img ng-src="{{m.user.picture}}" alt="User img" class="img-circle chat-box-img" /> {{m.user.displayName}}
                     <small class="chat-box-time">{{chatCtrl.timeFormater(m.date)}}</small>
-                    
                 </div>
                 <hr class="hr-clas" />
             </div>
-            
-     </div>
-    <div class="chat-box-footer">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter Text Here..." ng-model="chatCtrl.message">
-            <span class="input-group-btn">
-                <button class="btn btn-info" type="button" ng-click="chatCtrl.sendMessage()">SEND</button>
-            </span>
+            <div class="chat-box-footer">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Text Here..." ng-model="chatCtrl.message">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="button" ng-click="chatCtrl.sendMessage()">SEND</button>
+                    </span>
+                </div>
+            </div>
         </div>
+        <div class="panel-body chat-box-online" ng-show="!chatCtrl.isChatActive">
+            <div ng-repeat="u in chatCtrl.users">
+                <div class="chat-box-online-left">
+                    <img ng-src="{{u.picture}}" alt="User img" class="img-circle chat-box-img" /> {{u.displayName}}
+                    <a ng-click="chatCtrl.createRoom(u)" class="btn pull-right">Create</a>
+                    <br />
+                </div>
+                <hr class="hr-clas-low" />
+            </div>
+        </div>
+
     </div>
 </div>

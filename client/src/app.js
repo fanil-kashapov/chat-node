@@ -1,5 +1,5 @@
 'use strict';
-
+//import './../node_modules/jquery';
 import './../node_modules/angular';
 import './../node_modules/angular-ui-router';
 import './../node_modules/satellizer';
@@ -8,14 +8,19 @@ import './../node_modules/angular-socket-io';
 import ChatCtrl from './app/controllers/chatCtrl';
 import AuthCtrl from './app/controllers/authCtrl';
 
-import { default as chatAppTimeAgo } from './app/services/factories';
-import { default as chatAppSocket } from './app/services/socket';
+import {
+    default as services
+} from './app/services/services';
+import {
+    default as chatAppSocket
+} from './app/services/socket';
 
 var moduleName = 'chatApp';
 
-var app = angular.module(moduleName, ['ui.router', 'satellizer', 'btford.socket-io',chatAppSocket, chatAppTimeAgo, ChatCtrl, AuthCtrl]);
+var app = angular.module(moduleName, ['ui.router', 'satellizer', 'btford.socket-io', chatAppSocket, services, ChatCtrl, AuthCtrl]);
 
-app.config(function ($stateProvider, $authProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $authProvider, $urlRouterProvider, $locationProvider) {
+    //$locationProvider.html5Mode(true);
     $authProvider.facebook({
         clientId: '1765321937087529',
         name: 'facebook',
@@ -82,23 +87,22 @@ app.config(function ($stateProvider, $authProvider, $urlRouterProvider) {
     });
 
     $stateProvider
-    .state('/', {
-        controller: 'ChatCtrl',
-        controllerAs:'chatCtrl',
-        url: '/',
-        templateUrl: '../src/app/templates/tpl-chat.html',
-        onEnter: ['$state', '$auth', function($state, $auth) {
-            if (!$auth.isAuthenticated())
-                $state.go('singin');
-        }]
-    })
-    .state('singin', {
-        url: '/singin',
-        controller: 'AuthCtrl',
-        controllerAs:'vm',
-        templateUrl: '../src/app/templates/tpl-singin.html'
-    });
+        .state('/', {
+            controller: 'ChatCtrl',
+            controllerAs: 'chatCtrl',
+            url: '/',
+            templateUrl: '../src/app/templates/tpl-chat.html',
+            onEnter: ['$state', '$auth', function($state, $auth) {
+                if (!$auth.isAuthenticated())
+                    $state.go('singin');
+            }]
+        })
+        .state('singin', {
+            url: '/singin',
+            controller: 'AuthCtrl',
+            controllerAs: 'authCtrl',
+            templateUrl: '../src/app/templates/tpl-singin.html'
+        });
 
     $urlRouterProvider.otherwise('/');
 });
-

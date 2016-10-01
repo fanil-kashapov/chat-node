@@ -1,32 +1,20 @@
 'use strict';
 
-// app.controller('AuthCtrl', function ($scope, $auth, $location) {
-//     $scope.authenticate = function(provider) {
-//         $auth.authenticate(provider)
-//             .then(function(response) {
-//                 localStorage.user = angular.toJson(response.data.user);
-//                 // Signed in with Google.
-//                 $location.path('/');
-//             })
-//             .catch(function(response) {
-//                 // Something went wrong.
-//             });
-//     };
-// });
 var moduleName = 'socket.AuthCtrl';
 
 class AuthCtrl {
-    constructor ($auth, $location) {
+    constructor($auth, $location) {
         this.$auth = $auth,
-        this.$location = $location;
+            this.$location = $location;
     }
 
-    authenticate (provider) {
-        this.$auth.authenticate(provider)
+    authenticate(provider) {
+        var self = this;
+        self.$auth.authenticate(provider)
             .then(function(response) {
                 localStorage.user = angular.toJson(response.data.user);
-                // Signed in with Google.
-                this.$location.path('/');
+
+                self.$location.path('/');
             })
             .catch(function(response) {
                 // Something went wrong.
