@@ -28,7 +28,10 @@ module.exports = (socket) => {
 
         if (usersDictionary[data.user._id]) {
             usersDictionary[data.user._id].sockets.push(socket);
-            usersDictionary[data.user._id].room && socket.join(usersDictionary[data.user._id].room);
+            if(usersDictionary[data.user._id].room) {
+                socket.join(usersDictionary[data.user._id].room);
+                socket.broadcast.to(usersDictionary[socket.currentUser._id].room).emit('room-sync-init');
+            }
         } else {
             usersDictionary[data.user._id] = {
                 sockets: [socket]
@@ -77,6 +80,14 @@ module.exports = (socket) => {
         socket.broadcast.to(room).emit('room-leave', room, 'room closed');
 
         delete usersDictionary[socket.currentUser._id].room;
+    });
+
+    socket.on('room-sync-init', () => {
+        socket.broadcast.to(usersDictionary[socket.currentUser._id].room).emit('room-sync-init');
+    });
+
+    socket.on('room-sync', (data) => {
+        socket.broadcast.to(usersDictionary[socket.currentUser._id].room).emit('room-sync', data);
     });
 
 

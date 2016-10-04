@@ -3,15 +3,18 @@
 var moduleName = 'socket.ChatCtrl';
 
 class ChatCtrl {
-    constructor($auth, $location, chatSocket, TimeAgo, Sounds) {
+    constructor($auth, $location, chatSocket, TimeAgo, Sounds, Filters) {
         this.$auth = $auth;
         this.$location = $location;
         this.chatSocket = chatSocket;
+        this.Sounds = Sounds;
+        this.Filters = Filters;
+
         this.users = [];
         this.messages = [];
-        this.user = angular.fromJson(localStorage.user);
         this.timeFormater = TimeAgo.timeAgo;
-        this.Sounds = Sounds;
+        this.user = angular.fromJson(localStorage.user);
+        this.sortByDate = Filters.sortByDate;
 
         this.init();
     }
@@ -25,8 +28,9 @@ class ChatCtrl {
                 if (!data.data) {
                     return;
                 }
-                self.Sounds.Notification();
+                self.Sounds.notification();
                 self.messages.push(data.data);
+                localStorage.messages = angular.toJson(self.messages);
             });
 
             self.chatSocket.on('user-join', (data) => {
@@ -40,8 +44,10 @@ class ChatCtrl {
                 if (data.users) {
                     self.users = data.users.filter((el) => el._id !== self.user._id);
                 }
-                if (data.room)
+                if (data.room) {
+                    self.messages = angular.fromJson(localStorage.messages) || [];
                     self.isChatActive = true;
+                }
                 //self.messages.push(data.data);
             });
 
@@ -49,7 +55,19 @@ class ChatCtrl {
                 self.isChatActive = true;
             });
 
+            self.chatSocket.on('room-leave', () => {
+                self.isChatActive = false;
+            });
 
+            self.chatSocket.on('room-sync', (data) => {
+                let messages = angular.fromJson(data.messages);
+                self.messages = self.Filters.uniqByProperty([...self.messages, ...messages], 'date');
+                self.$apply();
+            });
+
+            self.chatSocket.on('room-sync-init', () => {
+                self.chatSocket.emit('room-sync', { messages: angular.toJson(self.messages) });
+            });
 
 
         });
@@ -85,6 +103,6 @@ class ChatCtrl {
 angular.module(moduleName, [])
     .controller('ChatCtrl', ChatCtrl);
 
-ChatCtrl.$inject = ['$auth', '$location', 'chatSocket', 'TimeAgo', 'Sounds'];
+ChatCtrl.$inject = ['$auth', '$location', 'chatSocket', 'TimeAgo', 'Sounds', 'Filters'];
 
 export default moduleName;

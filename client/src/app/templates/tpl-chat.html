@@ -4,7 +4,7 @@
             <a ng-click="chatCtrl.closeRoom(u)" ng-if="chatCtrl.isChatActive" class="btn btn-success">Leave chat</a>
         </div>
         <div class="panel-body chat-box-main" ng-show="chatCtrl.isChatActive">
-            <div ng-repeat="m in chatCtrl.messages" class="bounceInUp">
+            <div ng-repeat="m in chatCtrl.messages | orderBy:sortByDate:false" class="bounceInUp">
                 <div ng-class="m.user._id == chatCtrl.user._id ? 'chat-box-right' : 'chat-box-left'">
                     {{m.message}}
                 </div>
