@@ -17,23 +17,24 @@ const gulp = require('gulp'),
     less_path = 'content/less/';
 
 gulp.task('commonjs', function() {
+    
     return browserify([`${js_path}app.js`]).transform(babelify.configure({
-            sourceMapsAbsolute: true,
-            presets: ['es2015', 'react'],
-            // Optional ignore regex - if any filenames **do** match this regex then
-            // they aren't compiled
-            ignore: /vendor/,
+        sourceMapsAbsolute: true,
+        presets: ['es2015', 'react'],
+        // Optional ignore regex - if any filenames **do** match this regex then
+        // they aren't compiled
+        ignore: /vendor/,
 
-            // Optional only regex - if any filenames **don't** match this regex
-            // then they aren't compiled
-            only: /src/
-        }))
-        .bundle()
-        .pipe(source('app.js'))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('dist'));
+        // Optional only regex - if any filenames **don't** match this regex
+        // then they aren't compiled
+        only: /src/
+    }))
+    .bundle()
+    .pipe(source('app.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('templates', function() {
@@ -61,9 +62,16 @@ gulp.task('less', function() {
 
 });
 
-gulp.task('watch', function() {
-    watch(`${less_path}*.*`, ['less']);
-    watch([`${js_path}**/*.js`, `${js_path}**/**/*.js`, `${js_path}/*.js`], ['commonjs']);
+gulp.task('watch-js', function() {
+    console.log('watch');
+   // watch('content/**/*less', ['less']);
+    return gulp.watch([`${js_path}**/*.js`, `${js_path}**/**/*.js`, `${js_path}/*.js`], ['commonjs']);
 });
 
-gulp.task('default', ['commonjs', 'less', 'templates', 'vendor', 'watch']);
+gulp.task('watch-less', function() {
+    console.log('watch');
+    return gulp.watch(`${less_path}*.*`, ['less']);
+    //watch('src/**/*.js', ['commonjs']);
+});
+
+gulp.task('default', ['commonjs', 'less', 'templates', 'vendor', 'watch-js', 'watch-less']);

@@ -62,7 +62,6 @@ class ChatCtrl {
             self.chatSocket.on('room-sync', (data) => {
                 let messages = angular.fromJson(data.messages);
                 self.messages = self.Filters.uniqByProperty([...self.messages, ...messages], 'date');
-                self.$apply();
             });
 
             self.chatSocket.on('room-sync-init', () => {

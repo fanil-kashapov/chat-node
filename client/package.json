@@ -17,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "add-stream": "^1.0.0",
+    "angular-bootstrap-npm": "^0.14.3",
     "angular-socket-io": "^0.7.0",
     "angular-ui-router": "^0.3.1",
     "animate.css": "^3.5.2",
@@ -52,6 +53,7 @@
     "http": "0.0.0",
     "merge-stream": "^1.0.0",
     "merge2": "^1.0.2",
+    "ng-file-upload": "^12.2.12",
     "nodemon": "^1.10.2",
     "satellizer": "^0.15.4",
     "serve-static": "^1.11.1",
