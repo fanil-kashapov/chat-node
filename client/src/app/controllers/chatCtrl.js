@@ -77,6 +77,7 @@ class ChatCtrl {
 
         var data = {
             message: self.message,
+            type: 'message',
             user: self.user,
             date: new Date()
         };
@@ -96,6 +97,19 @@ class ChatCtrl {
         var self = this;
         self.isChatActive = false;
         self.chatSocket.emit('room-leave');
+    }
+    
+    sendPhoto(img) {
+        var self = this;
+        var data = {
+            message: img,
+            type: 'photo',
+            user: self.user,
+            date: new Date()
+        };
+
+        self.chatSocket.emit('message', data);
+        self.messages.push(data);
     }
 }
 

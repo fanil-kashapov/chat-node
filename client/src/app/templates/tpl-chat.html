@@ -1,13 +1,18 @@
 <div class=" col-lg-6 col-md-6 col-sm-6">
     <div class="chat-box-div">
         <div class="chat-box-head">
-            <a ng-click="chatCtrl.closeRoom(u)" ng-if="chatCtrl.isChatActive" class="btn btn-success">Leave chat</a>
+            <div ng-if="chatCtrl.isChatActive" >
+                    <a ng-click="chatCtrl.closeRoom(u)" class="btn btn-success">Leave chat</a>
+                    <div img-api class="pull-right"></div>
+            </div>
+            
         </div>
         <div class="panel-body chat-box-main" ng-show="chatCtrl.isChatActive">
             <div ng-repeat="m in chatCtrl.messages | orderBy:sortByDate:false" class="bounceInUp">
-                <div ng-class="m.user._id == chatCtrl.user._id ? 'chat-box-right' : 'chat-box-left'">
+                <div ng-if="m.type == 'message'" ng-class="m.user._id == chatCtrl.user._id ? 'chat-box-right' : 'chat-box-left'">
                     {{m.message}}
                 </div>
+                <img ng-if="m.type == 'photo'" ng-src="{{m.message}}"></img>
                 <div ng-class="m.user._id == chatCtrl.user._id ? 'chat-box-name-right' : 'chat-box-name-left'">
                     <img ng-src="{{m.user.picture}}" alt="User img" class="img-circle chat-box-img" /> {{m.user.displayName}}
                     <small class="chat-box-time">{{chatCtrl.timeFormater(m.date)}}</small>
@@ -22,7 +27,7 @@
                     </span>
                 </div>
             </div>
-            <div img-api></div>
+            
         </div>
         <div class="panel-body chat-box-online" ng-show="!chatCtrl.isChatActive">
             <div ng-repeat="u in chatCtrl.users">

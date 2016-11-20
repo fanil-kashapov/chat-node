@@ -38,12 +38,11 @@ class ImgApiController {
                     }
                 });
             // Handle close of popup
-                currentModalWindow.result.then(function () {
-                    currentModalWindow = null;
-                }, function () {
-                    currentModalWindow = null;
+                currentModalWindow.result.then(function (data) {
+                    self._$scope.$parent.chatCtrl.sendPhoto(data);
                 });
             };
+            
             reader.readAsDataURL(file);
         });
     }
@@ -102,7 +101,9 @@ export default class ImgApi {
         this.controllerAs = 'fooz';
         this.bindToController = true;
         this.template = `<div ng-class="{'full-size': fooz.myImage != ''}">
-                            <div>Select an image file: <input type="file" id="fileInput" /></div>
+                            <label class="file-upload glyphicon glyphicon-paperclip" title="Sent Photo">
+                                <input type="file" id="fileInput"/>
+                            </label>
                         </div>`;
         // this.scope = {
         //     onChange: '&'
