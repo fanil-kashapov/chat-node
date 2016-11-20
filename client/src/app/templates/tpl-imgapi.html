@@ -1,4 +1,8 @@
-<div>
+<div class="popup-holder">
+    <button ng-click="imgPopCtrl.gray()">Gray</button>
+    <button ng-click="imgPopCtrl.sepia()">Sepia</button>
+    <button ng-click="imgPopCtrl.reset()">Reset</button>
+    <button ng-click="imgPopCtrl.submit()" class="pull-right">OK</button>
     <div class="cropArea">
         <img-crop image="imgPopCtrl.img" result-image="imgPopCtrl.myCroppedImage"></img-crop>
     </div>
