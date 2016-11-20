@@ -63,15 +63,15 @@ gulp.task('less', function() {
 });
 
 gulp.task('watch-js', function() {
-    console.log('watch');
-   // watch('content/**/*less', ['less']);
     return gulp.watch([`${js_path}**/*.js`, `${js_path}**/**/*.js`, `${js_path}/*.js`], ['commonjs']);
 });
 
 gulp.task('watch-less', function() {
-    console.log('watch');
-    return gulp.watch(`${less_path}*.*`, ['less']);
-    //watch('src/**/*.js', ['commonjs']);
+    return gulp.watch(`${less_path}*.less`, ['less']);
 });
 
-gulp.task('default', ['commonjs', 'less', 'templates', 'vendor', 'watch-js', 'watch-less']);
+gulp.task('watch-templates', function() {
+    return gulp.watch(`${tmp_path}*.html`, ['templates']);
+});
+
+gulp.task('default', ['commonjs', 'less', 'templates', 'vendor', 'watch-js', 'watch-less', 'watch-templates']);
