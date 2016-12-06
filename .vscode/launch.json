@@ -41,6 +41,24 @@
             "port": 5858,
             "sourceMaps": false,
             "outDir": null
+        },
+        {
+            "name": "Run Karma tests",
+            "type": "node",
+            "request": "launch", 
+            "program": "${workspaceRoot}/client/node_modules/karma/bin/karma",
+            "args": [
+                "start",
+                "${workspaceRoot}/client/karma.conf.js"
+            ],
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "stopOnEntry": true,
+            "sourceMaps": false
         }
     ]
 }
