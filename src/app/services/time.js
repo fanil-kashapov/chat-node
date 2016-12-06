@@ -1,9 +1,4 @@
-'use strict';
-
-var moduleName = 'chatApp.servicess';
-angular.module(moduleName, []);
-
-class TimeAgo {
+export default class TimeAgo {
     constructor() {}
 
     timeAgo(date) {
@@ -79,52 +74,3 @@ class TimeAgo {
     }
 }
 
-angular.module(moduleName)
-    .factory('TimeAgo', TimeAgo.TimeAgoFactory);
-
-class Sounds {
-    constructor() {
-        this.notificationEl = angular.element('#audio-notification');
-    }
-
-    notification() {
-        this.notificationEl.trigger('play');
-    }
-
-    static SoundsFactory() {
-        return new Sounds();
-    }
-}
-
-angular.module(moduleName)
-    .factory('Sounds', Sounds.SoundsFactory);
-
-class Filters {
-    constructor(){}
-
-    uniqByProperty(array, property) {
-        var processed = [];
-        for (var i=array.length-1; i>=0; i--) {
-            if (processed.indexOf(array[i][property])<0) {
-                processed.push(array[i][property]);
-            } else {
-                array.splice(i, 1);
-            }
-        }
-        return array;
-    }
-
-    sortByDate(item) {
-        var date = new Date(item.date);
-        return date;
-    }
-
-    static FiltersFactory() {
-        return new Filters();
-    }
-}
-
-angular.module(moduleName)
-    .factory('Filters', Filters.FiltersFactory);
-
-export default moduleName;

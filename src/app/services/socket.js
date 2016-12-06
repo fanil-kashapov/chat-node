@@ -1,8 +1,6 @@
 'use strict';
 
-var moduleName = 'chatApp.socket';
-
-class ChatSocket {
+export default class ChatSocket {
     constructor(socketFactory) {
         this.socketFactory = socketFactory;
         //this.io = io.connect('localhost:8080', { user: localStorage.user });
@@ -17,10 +15,3 @@ class ChatSocket {
         return ins.socketFactory();
     }
 }
-
-angular.module(moduleName, [])
-    .factory('chatSocket', ChatSocket.chatSocketFactory);
-
-ChatSocket.chatSocketFactory.$inject = ['socketFactory'];
-
-export default moduleName;
