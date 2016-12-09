@@ -1,14 +1,14 @@
-import Foo from '../../src/services/services.js';
+import time from '.././src/app/services/time';
 
 describe('Time', function () {
 
-    let time;
+    var t;
 
     beforeEach(()=>{
-        time = new Foo();
+        t = time.TimeAgoFactory();
     });
 
-    it('should return Do Something when calling doSomething', ()=>{
-        expect(foo.doSomething()).toEqual('Do Something');
+    it('should return message just now', ()=>{
+        expect(t.timeAgo(new Date())).toEqual('just now');
     });
 });
