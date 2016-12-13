@@ -25,7 +25,7 @@ module.exports = function(config) {
         preprocessors: {
             'src/app.js': ['browserify'],
             'src/**/*.js': ['browserify'],
-            'test/**/*test.js': ['browserify']
+            'test/**/*.test.js': ['browserify']
         },
 
         // configure jasmine.frameworks
