@@ -7,9 +7,7 @@ import angularBootstrapNpm from './../node_modules/angular-bootstrap-npm';
 import './../node_modules/satellizer';
 import './../node_modules/angular-socket-io';
 
-import ChatCtrl from './app/controllers/chatCtrl';
-import AuthCtrl from './app/controllers/authCtrl';
-import ImgPopupCtrl from './app/controllers/imgPopupCtrl';
+import controllers from './app/controllers/controllers.injector';
 
 import services from './app/services/services.injector';
 
@@ -19,7 +17,7 @@ import ImgApi from './app/directives/imgapi';
 
 var moduleName = 'chatApp';
 
-var app = angular.module(moduleName, ['ui.router', 'satellizer', 'btford.socket-io', angularBootstrapNpm, services, filters, ChatCtrl, AuthCtrl, ImgPopupCtrl, 'ngImgCrop']);
+var app = angular.module(moduleName, ['ui.router', 'satellizer', 'btford.socket-io', angularBootstrapNpm, services, filters, controllers, 'ngImgCrop']);
 angular.module(moduleName).directive('imgApi', () => new ImgApi());
 
 app.config(function($stateProvider, $authProvider, $urlRouterProvider, $locationProvider) {

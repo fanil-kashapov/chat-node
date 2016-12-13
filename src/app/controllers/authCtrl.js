@@ -2,7 +2,7 @@
 
 var moduleName = 'socket.AuthCtrl';
 
-class AuthCtrl {
+export default class AuthCtrl {
     constructor($auth, $location) {
         this.$auth = $auth,
             this.$location = $location;
@@ -21,10 +21,3 @@ class AuthCtrl {
             });
     }
 }
-
-angular.module(moduleName, [])
-    .controller('AuthCtrl', AuthCtrl);
-
-AuthCtrl.$inject = ['$auth', '$location'];
-
-export default moduleName;

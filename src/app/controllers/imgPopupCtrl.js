@@ -2,7 +2,7 @@
 
 var moduleName = 'socket.ImgPopupCtrl';
 
-class ImgPopupCtrl {
+export default class ImgPopupCtrl {
     constructor ($uibModalInstance, img) {
         this._$uibModalInstance = $uibModalInstance;
         this.img = img;
@@ -88,11 +88,3 @@ class ImgPopupCtrl {
         this._$uibModalInstance.close(this.myCroppedImage);
     }
 }
-
-
-angular.module(moduleName, [])
-    .controller('ImgPopupCtrl', ImgPopupCtrl);
-
-ImgPopupCtrl.$inject = ['$uibModalInstance', 'img'];
-
-export default moduleName;

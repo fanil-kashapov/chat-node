@@ -2,7 +2,7 @@
 
 var moduleName = 'socket.ChatCtrl';
 
-class ChatCtrl {
+export default class ChatCtrl {
     constructor($auth, $location, chatSocket, TimeAgo, Sounds, Filters) {
         this.$auth = $auth;
         this.$location = $location;
@@ -112,10 +112,3 @@ class ChatCtrl {
         self.messages.push(data);
     }
 }
-
-angular.module(moduleName, [])
-    .controller('ChatCtrl', ChatCtrl);
-
-ChatCtrl.$inject = ['$auth', '$location', 'chatSocket', 'TimeAgo', 'Sounds', 'Filters'];
-
-export default moduleName;
