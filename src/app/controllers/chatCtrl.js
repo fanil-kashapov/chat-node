@@ -3,9 +3,7 @@
 var moduleName = 'socket.ChatCtrl';
 
 export default class ChatCtrl {
-    constructor($auth, $location, chatSocket, TimeAgo, Sounds, Filters) {
-        this.$auth = $auth;
-        this.$location = $location;
+    constructor(chatSocket, TimeAgo, Sounds, Filters) {
         this.chatSocket = chatSocket;
         this.Sounds = Sounds;
         this.Filters = Filters;
@@ -21,43 +19,45 @@ export default class ChatCtrl {
 
     init() {
         var self = this;
+
+        self.chatSocket.on('message', function(data) {
+            if (!data.data) {
+                return;
+            }
+            self.messages.push(data.data);
+            localStorage.messages = angular.toJson(self.messages);
+
+            self.Sounds.notification();
+        });
+
+        self.chatSocket.on('user-join', (data) => {
+            if (data.user && !!~self.users.filter((el) => el._id === data.user._id).length) {
+                self.users.push(data.user);
+            }
+        });
+
+        self.chatSocket.on('init-data', (data) => {
+            if (data.users) {
+                self.users = data.users.filter((el) => el._id !== self.user._id);
+            }
+            if (data.room) {
+                self.messages = angular.fromJson(localStorage.messages) || [];
+                self.isChatActive = true;
+            }
+        });
+
+        self.chatSocket.on('room', () => {
+            self.isChatActive = true;
+        });
+
+        self.chatSocket.on('room-leave', () => {
+            self.isChatActive = false;
+        });
+
+        
+
         self.chatSocket.on('connect', function(data) {
             self.chatSocket.emit('join', { user: self.user });
-
-            self.chatSocket.on('message', function(data) {
-                if (!data.data) {
-                    return;
-                }
-                self.Sounds.notification();
-                self.messages.push(data.data);
-                localStorage.messages = angular.toJson(self.messages);
-            });
-
-            self.chatSocket.on('user-join', (data) => {
-                if (data.user && !~self.users.filter((el) => el._id === data.user._id).length) {
-                    self.users.push(data.user);
-                }
-                //self.messages.push(data.data);
-            });
-
-            self.chatSocket.on('init-data', (data) => {
-                if (data.users) {
-                    self.users = data.users.filter((el) => el._id !== self.user._id);
-                }
-                if (data.room) {
-                    self.messages = angular.fromJson(localStorage.messages) || [];
-                    self.isChatActive = true;
-                }
-                //self.messages.push(data.data);
-            });
-
-            self.chatSocket.on('room', () => {
-                self.isChatActive = true;
-            });
-
-            self.chatSocket.on('room-leave', () => {
-                self.isChatActive = false;
-            });
 
             self.chatSocket.on('room-sync', (data) => {
                 let messages = angular.fromJson(data.messages);
@@ -67,8 +67,6 @@ export default class ChatCtrl {
             self.chatSocket.on('room-sync-init', () => {
                 self.chatSocket.emit('room-sync', { messages: angular.toJson(self.messages) });
             });
-
-
         });
     }
 
@@ -84,7 +82,7 @@ export default class ChatCtrl {
 
         self.chatSocket.emit('message', data);
         self.messages.push(data);
-        self.message = '';
+        self.message = undefined;
     }
 
     createRoom(user) {

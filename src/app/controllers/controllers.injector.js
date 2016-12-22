@@ -14,7 +14,7 @@ AuthCtrl.$inject = ['$auth', '$location'];
 angular.module(moduleName)
     .controller('ChatCtrl', ChatCtrl);
 
-ChatCtrl.$inject = ['$auth', '$location', 'chatSocket', 'TimeAgo', 'Sounds', 'Filters'];
+ChatCtrl.$inject = ['chatSocket', 'TimeAgo', 'Sounds', 'Filters'];
 
 angular.module(moduleName)
     .controller('ImgPopupCtrl', ImgPopupCtrl);

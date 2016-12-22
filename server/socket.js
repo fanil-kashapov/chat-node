@@ -89,14 +89,4 @@ module.exports = (socket) => {
     socket.on('room-sync', (data) => {
         socket.broadcast.to(usersDictionary[socket.currentUser._id].room).emit('room-sync', data);
     });
-
-
-
-    // clean up when a user leaves, and broadcast it to other users
-    // socket.on('disconnect', function () {
-    //     socket.broadcast.emit('user:left', {
-    //         name: userName
-    //     });
-    //     //userNames.free(name);
-    // });
 };
