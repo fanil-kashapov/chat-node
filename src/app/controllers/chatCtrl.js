@@ -18,6 +18,8 @@ export default class ChatCtrl {
     }
 
     init() {
+        // TODO: We are using es2015 - with arrow functions we dont need this old hack (self = this).
+        // Please use .bind() for context binding
         var self = this;
 
         self.chatSocket.on('message', function(data) {
@@ -31,7 +33,10 @@ export default class ChatCtrl {
         });
 
         self.chatSocket.on('user-join', (data) => {
+            // TODO: Why we need this '!!~' ? And what is the meaning of '~'
             if (data.user && !!~self.users.filter((el) => el._id === data.user._id).length) {
+                // TODO: As our function get only one parameter - we can avoid parenthesis. e.g.
+                // .filter(el => el._id...)
                 self.users.push(data.user);
             }
         });
@@ -53,8 +58,6 @@ export default class ChatCtrl {
         self.chatSocket.on('room-leave', () => {
             self.isChatActive = false;
         });
-
-        
 
         self.chatSocket.on('connect', function(data) {
             self.chatSocket.emit('join', { user: self.user });
@@ -96,7 +99,7 @@ export default class ChatCtrl {
         self.isChatActive = false;
         self.chatSocket.emit('room-leave');
     }
-    
+
     sendPhoto(img) {
         var self = this;
         var data = {

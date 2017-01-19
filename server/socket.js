@@ -56,6 +56,7 @@ module.exports = (socket) => {
     });
 
     socket.on('room', (data) => {
+        // TODO: Please don't use var inside arrow functions
         var room = getRoomName();
 
         rooms[room] = usersDictionary[socket.currentUser._id];
