@@ -1,12 +1,9 @@
 'use strict';
 
-// TODO: Please remove unused variables e.g. 'moduleName'
-var moduleName = 'socket.AuthCtrl';
-
 export default class AuthCtrl {
     constructor($auth, $location) {
         this.$auth = $auth,
-        this.$location = $location;
+            this.$location = $location;
     }
 
     authenticate(provider) {
@@ -18,7 +15,7 @@ export default class AuthCtrl {
                 self.$location.path('/');
             })
             .catch(function(response) {
-                // Something went wrong.
+                console.log(response);
             });
     }
 }
