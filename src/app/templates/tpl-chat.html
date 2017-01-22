@@ -8,7 +8,7 @@
             
         </div>
         <div class="panel-body chat-box-main" ng-show="chatCtrl.isChatActive">
-            <div ng-repeat="m in chatCtrl.messages | orderBy:sortByDate:false" class="bounceInUp">
+            <div ng-repeat="m in chatCtrl.messages | orderBy:convertToDate:false" class="bounceInUp">
                 <div ng-if="m.type == 'message'" ng-class="m.user._id == chatCtrl.user._id ? 'chat-box-right' : 'chat-box-left'">
                     {{m.message}}
                 </div>

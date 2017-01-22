@@ -1,8 +1,6 @@
 // TODO: Don't forget to format your code
 export default class Filters {
-    constructor(){}
-
-    uniqByProperty(array, property) {
+    uniqByProperty (array, property) {
         // TODO: Please use ES2015 features e.g.
         // const arr = [1, 2, 2, 3, 4],
         //     filteredValues = arr.filter(el => el > 1),
@@ -20,12 +18,13 @@ export default class Filters {
         return array;
     }
 
-    sortByDate(item) {
-        var date = new Date(item.date);
+    convertToDate (item) {
+        const date = new Date(item.date);
+        
         return date;
     }
 
-    static FiltersFactory() {
+    static FiltersFactory () {
         return new Filters();
     }
 }
