@@ -1,11 +1,7 @@
-'use strict';
-
-var moduleName = 'imgapi';
-
 class ImgApiController {
-    
+
     constructor ($scope, $state, $window, $uibModal) {
-        this._$scope = $scope; 
+        this._$scope = $scope;
         this._$state = $state;
         this._$window = $window;
         this._$uibModal = $uibModal;
@@ -18,31 +14,25 @@ class ImgApiController {
         this.addEventListener();
     }
 
-    addEventListener() {
+    addEventListener () {
         var self = this;
         angular.element(document.querySelector('#fileInput')).on('change', (evt) => {
             var file = evt.currentTarget.files[0];
             var reader = new FileReader();
             reader.onload = function (evt) {
-                //self._$scope.$apply(function(){
-                    //this._$uibModal = 
-                   // self.myImage = evt.target.result;
-                //});
                 let currentModalWindow = self._$uibModal.open({
                     templateUrl: 'src/app/templates/tpl-imgapi.html',
                     controller: 'ImgPopupCtrl as imgPopCtrl',
                     resolve: {
-                        img: function() {
-                            return evt.target.result;
-                        }
+                        img: () => evt.target.result
                     }
                 });
-            // Handle close of popup
-                currentModalWindow.result.then(function (data) {
-                    self._$scope.$parent.chatCtrl.sendPhoto(data);
+                // Handle close of popup
+                currentModalWindow.result.then((data) => {
+                    this._$scope.$parent.chatCtrl.sendPhoto(data);
                 });
             };
-            
+
             reader.readAsDataURL(file);
         });
     }
@@ -55,29 +45,25 @@ class ImgApiController {
             file = files[0];
             try {
                 // Get window.URL object
-                var URL = window.URL || window.webkitURL;
+                let URL = window.URL || window.webkitURL;
 
                 // Create ObjectURL
-                var imgURL = URL.createObjectURL(file);
+                let imgURL = URL.createObjectURL(file);
 
                 // Set img src to ObjectURL
                 this.showPictureElement.src = imgURL;
 
                 // Revoke ObjectURL after imagehas loaded
-                this.showPictureElement.onload = function() {
-                    URL.revokeObjectURL(imgURL);  
-                };
-            }
-            catch (e) {
+                this.showPictureElement.onload = () => URL.revokeObjectURL(imgURL);
+            } catch (e) {
                 try {
                     // Fallback if createObjectURL is not supported
-                    var fileReader = new FileReader();
+                    let fileReader = new FileReader();
                     fileReader.onload = function (event) {
                         this.showPictureElement.src = event.target.result;
                     };
                     fileReader.readAsDataURL(file);
-                }
-                catch (e) {
+                } catch (e) {
                     // Display error message
                     // var error = document.querySelector("#error");
                     // if (error) {
@@ -88,7 +74,7 @@ class ImgApiController {
         }
     }
 
-    
+
 }
 
 ImgApiController.$inject = ['$scope', '$state', '$window', '$uibModal'];
@@ -105,16 +91,5 @@ export default class ImgApi {
                                 <input type="file" id="fileInput"/>
                             </label>
                         </div>`;
-        // this.scope = {
-        //     onChange: '&'
-        // };
-
     }
 }
-
-
-
-// angular.module(moduleName)
-//     .directive('img-api', ImgApi.ImgApiFactory);
-
-// export default moduleName;

@@ -16,6 +16,7 @@
   "author": "Fanil.Kashapov",
   "license": "ISC",
   "devDependencies": {
+    "@eleks/eslint-config-eleks": "^0.2.1",
     "add-stream": "^1.0.0",
     "angular-bootstrap-npm": "^0.14.3",
     "angular-mocks": "^1.5.9",
@@ -37,7 +38,7 @@
     "cors": "^2.8.1",
     "del": "^2.2.2",
     "es6ify": "^1.6.0",
-    "eslint": "^3.1.1",
+    "eslint": "^3.14.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-react": "^5.2.2",
     "express": "^4.14.0",

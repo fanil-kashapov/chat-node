@@ -9,9 +9,9 @@ class GeolocationController {
         this.init();
     }
 
-    init() {
+    init () {
         let self = this;
-        self._$timeout(()=> {
+        self._$timeout(() => {
             navigator.geolocation.getCurrentPosition((position) => {
                 self.speed = position.coords.speed;
                 self.init();
@@ -23,7 +23,7 @@ class GeolocationController {
 GeolocationController.$inject = ['$scope', '$state', '$window', '$timeout'];
 
 export default class Geo {
-    constructor() {
+    constructor () {
         this.restrict = 'AE';
         this.replace = true;
         this.controller = GeolocationController;

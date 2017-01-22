@@ -22,7 +22,7 @@ var moduleName = 'chatApp';
 var app = angular.module(moduleName, ['ui.router', 'satellizer', 'btford.socket-io', angularBootstrapNpm, services, filters, controllers, 'ngImgCrop']);
 angular.module(moduleName).directive('imgApi', () => new ImgApi());
 
-app.config(function($stateProvider, $authProvider, $urlRouterProvider, $locationProvider) {
+app.config(($stateProvider, $authProvider, $urlRouterProvider, $locationProvider) => {
     $locationProvider.html5Mode(true);
     AuthConfig.applyAuthSettings($authProvider);
 
@@ -33,10 +33,9 @@ app.config(function($stateProvider, $authProvider, $urlRouterProvider, $location
             controllerAs: 'chatCtrl',
             url: '/',
             templateUrl: '../src/app/templates/tpl-chat.html',
-            onEnter: ['$state', '$auth', function($state, $auth) {
-                if (!$auth.isAuthenticated()) {
+            onEnter: ['$state', '$auth', ($state, $auth) => {
+                if (!$auth.isAuthenticated())
                     $state.go('singin');
-                }
             }]
         })
         .state('singin', {
@@ -45,6 +44,4 @@ app.config(function($stateProvider, $authProvider, $urlRouterProvider, $location
             controllerAs: 'authCtrl',
             templateUrl: '../src/app/templates/tpl-singin.html'
         });
-
-
 });

@@ -1,13 +1,13 @@
 export default class Sounds {
-    constructor() {
+    constructor () {
         this.notificationEl = angular.element('#audio-notification');
     }
 
-    notification() {
+    notification () {
         this.notificationEl.trigger('play');
     }
 
-    static SoundsFactory() {
+    static SoundsFactory () {
         return new Sounds();
     }
 }

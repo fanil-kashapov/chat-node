@@ -1,5 +1,3 @@
-'use strict';
-
 import time from './time';
 import sound from './sound';
 import socket from './socket';

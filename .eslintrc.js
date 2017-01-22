@@ -4,30 +4,13 @@ module.exports = {
         "commonjs": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "extends": '@eleks/eleks',
     "parserOptions": {
         "sourceType": "module"
     },
-    "globals" : {
+    "globals": {
         "angular": true,
         "$": true
     },
-    "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    }
+ 
 };

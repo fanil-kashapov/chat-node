@@ -1,9 +1,7 @@
 'use strict';
 
-var moduleName = 'socket.ChatCtrl';
-
 export default class ChatCtrl {
-    constructor(chatSocket, TimeAgo, Sounds, Filters) {
+    constructor (chatSocket, TimeAgo, Sounds, Filters) {
         this.chatSocket = chatSocket;
         this.Sounds = Sounds;
         this.Filters = Filters;
@@ -17,99 +15,92 @@ export default class ChatCtrl {
         this.init();
     }
 
-    init() {
-        // TODO: We are using es2015 - with arrow functions we dont need this old hack (self = this).
+    init () {
+        // TODO: We are using es2015 - with arrow functions we dont need this old hack (this = this).
         // Please use .bind() for context binding
-        var self = this;
-
-        self.chatSocket.on('message', function(data) {
-            if (!data.data) {
+        this.chatSocket.on('message', (data) => {
+            if (!data.data)
                 return;
-            }
-            self.messages.push(data.data);
-            localStorage.messages = angular.toJson(self.messages);
 
-            self.Sounds.notification();
+            this.messages.push(data.data);
+            localStorage.messages = angular.toJson(this.messages);
+
+            this.Sounds.notification();
         });
 
-        self.chatSocket.on('user-join', (data) => {
+        this.chatSocket.on('user-join', (data) => {
             // TODO: Why we need this '!!~' ? And what is the meaning of '~'
-            if (data.user && !!~self.users.filter((el) => el._id === data.user._id).length) {
+            if (data.user && !!~this.users.filter((el) => el._id === data.user._id).length) {
                 // TODO: As our function get only one parameter - we can avoid parenthesis. e.g.
                 // .filter(el => el._id...)
-                self.users.push(data.user);
+                this.users.push(data.user);
             }
         });
 
-        self.chatSocket.on('init-data', (data) => {
-            if (data.users) {
-                self.users = data.users.filter((el) => el._id !== self.user._id);
-            }
+        this.chatSocket.on('init-data', (data) => {
+            if (data.users)
+                this.users = data.users.filter((el) => el._id !== this.user._id);
+
             if (data.room) {
-                self.messages = angular.fromJson(localStorage.messages) || [];
-                self.isChatActive = true;
+                this.messages = angular.fromJson(localStorage.messages) || [];
+                this.isChatActive = true;
             }
         });
 
-        self.chatSocket.on('room', () => {
-            self.isChatActive = true;
+        this.chatSocket.on('room', () => {
+            this.isChatActive = true;
         });
 
-        self.chatSocket.on('room-leave', () => {
-            self.isChatActive = false;
+        this.chatSocket.on('room-leave', () => {
+            this.isChatActive = false;
         });
 
-        self.chatSocket.on('connect', function(data) {
-            self.chatSocket.emit('join', { user: self.user });
+        this.chatSocket.on('connect', (data) => {
+            this.chatSocket.emit('join', { user: this.user });
 
-            self.chatSocket.on('room-sync', (data) => {
+            this.chatSocket.on('room-sync', (data) => {
                 let messages = angular.fromJson(data.messages);
-                self.messages = self.Filters.uniqByProperty([...self.messages, ...messages], 'date');
+                this.messages = this.Filters.uniqByProperty([...this.messages, ...messages], 'date');
             });
 
-            self.chatSocket.on('room-sync-init', () => {
-                self.chatSocket.emit('room-sync', { messages: angular.toJson(self.messages) });
+            this.chatSocket.on('room-sync-init', () => {
+                this.chatSocket.emit('room-sync', { messages: angular.toJson(this.messages) });
             });
         });
     }
 
-    sendMessage() {
-        var self = this;
-
+    sendMessage () {
         var data = {
-            message: self.message,
+            message: this.message,
             type: 'message',
-            user: self.user,
+            user: this.user,
             date: new Date()
         };
 
-        self.chatSocket.emit('message', data);
-        self.messages.push(data);
-        self.message = undefined;
+        this.chatSocket.emit('message', data);
+        this.messages.push(data);
+        this.message = null;
     }
 
-    createRoom(user) {
-        var self = this;
-        self.isChatActive = true;
-        self.chatSocket.emit('room', { owner: self.user, user });
+    createRoom (user) {
+        this.isChatActive = true;
+        this.chatSocket.emit('room', { owner: this.user, user });
     }
 
-    closeRoom() {
-        var self = this;
-        self.isChatActive = false;
-        self.chatSocket.emit('room-leave');
+    closeRoom () {
+        this.isChatActive = false;
+        this.chatSocket.emit('room-leave');
     }
 
-    sendPhoto(img) {
-        var self = this;
+    sendPhoto (img) {
         var data = {
             message: img,
             type: 'photo',
-            user: self.user,
+            user: this.user,
             date: new Date()
         };
 
-        self.chatSocket.emit('message', data);
-        self.messages.push(data);
+        this.chatSocket.emit('message', data);
+        this.messages.push(data);
     }
 }
