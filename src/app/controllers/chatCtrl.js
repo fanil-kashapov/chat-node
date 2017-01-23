@@ -30,7 +30,7 @@ export default class ChatCtrl {
 
         this.chatSocket.on('user-join', (data) => {
             // TODO: Why we need this '!!~' ? And what is the meaning of '~'
-            if (data.user && !!~this.users.filter((el) => el._id === data.user._id).length) {
+            if (data.user && !this.users.filter((el) => el._id === data.user._id).length) {
                 // TODO: As our function get only one parameter - we can avoid parenthesis. e.g.
                 // .filter(el => el._id...)
                 this.users.push(data.user);
