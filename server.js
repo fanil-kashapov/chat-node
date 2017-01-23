@@ -5,23 +5,18 @@ var qs = require('querystring'),
     cors = require('cors'),
     express = require('express'),
     logger = require('morgan'),
-
     moment = require('moment'),
-
     socket = require('./server/socket.js'),
-
-    router = require('./server/router.js');
-
-var config = require('./server/config');
-var userSchema = require('./server/db/user.schema');
-var User = mongoose.model('User', userSchema);
+    router = require('./server/router.js'),
+    config = require('./server/config'),
+    userSchema = require('./server/db/user.schema'),
+    User = mongoose.model('User', userSchema),
+    app = module.exports.app = express();
 
 mongoose.connect(config.MONGO_URI);
 mongoose.connection.on('error', function(err) {
     console.log('Error: Could not connect to MongoDB. Did you forget to run `mongod`?'.red);
 });
-
-var app = module.exports.app = express();
 
 router(app, User);
 
