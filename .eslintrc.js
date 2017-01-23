@@ -10,6 +10,7 @@ module.exports = {
     },
     "globals": {
         "angular": true,
+        "localStorage": true,
         "$": true
     },
  

@@ -23,10 +23,10 @@ var app = angular.module(moduleName, ['ui.router', 'satellizer', 'btford.socket-
 angular.module(moduleName).directive('imgApi', () => new ImgApi());
 
 app.config(($stateProvider, $authProvider, $urlRouterProvider, $locationProvider) => {
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
     AuthConfig.applyAuthSettings($authProvider);
 
-    $urlRouterProvider.otherwise('/');
+    
     $stateProvider
         .state('/', {
             controller: 'ChatCtrl',
@@ -44,4 +44,6 @@ app.config(($stateProvider, $authProvider, $urlRouterProvider, $locationProvider
             controllerAs: 'authCtrl',
             templateUrl: '../src/app/templates/tpl-singin.html'
         });
+        
+    $urlRouterProvider.otherwise('/');
 });

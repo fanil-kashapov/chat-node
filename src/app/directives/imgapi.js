@@ -15,12 +15,12 @@ class ImgApiController {
     }
 
     addEventListener () {
-        var self = this;
+
         angular.element(document.querySelector('#fileInput')).on('change', (evt) => {
             var file = evt.currentTarget.files[0];
             var reader = new FileReader();
-            reader.onload = function (evt) {
-                let currentModalWindow = self._$uibModal.open({
+            reader.onload = ((evt) => {
+                let currentModalWindow = this._$uibModal.open({
                     templateUrl: 'src/app/templates/tpl-imgapi.html',
                     controller: 'ImgPopupCtrl as imgPopCtrl',
                     resolve: {
@@ -28,10 +28,10 @@ class ImgApiController {
                     }
                 });
                 // Handle close of popup
-                currentModalWindow.result.then((data) => {
+                currentModalWindow.result.then(((data) => {
                     this._$scope.$parent.chatCtrl.sendPhoto(data);
-                });
-            };
+                }).bind(this));
+            }).bind(this);
 
             reader.readAsDataURL(file);
         });
