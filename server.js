@@ -8,7 +8,9 @@ var qs = require('querystring'),
 
     moment = require('moment'),
 
-    socket = require('./server/socket.js');
+    socket = require('./server/socket.js'),
+
+    router = require('./server/router.js');
 
 var config = require('./server/config');
 var userSchema = require('./server/db/user.schema');
@@ -21,6 +23,8 @@ mongoose.connection.on('error', function(err) {
 
 var app = module.exports.app = express();
 
+router(app, User);
+
 app.set('port', process.env.NODE_PORT || 3000);
 app.set('host', process.env.NODE_IP || 'localhost');
 app.use(cors());
@@ -28,19 +32,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Force HTTPS on Heroku
-if (app.get('env') === 'production') {
-    app.use(function(req, res, next) {
-        var protocol = req.get('x-forwarded-proto');
-        protocol == 'https' ? next() : res.redirect('https://' + req.hostname + req.url);
-    });
-}
+// if (app.get('env') === 'production') {
+//     app.use(function(req, res, next) {
+//         var protocol = req.get('x-forwarded-proto');
+//         protocol == 'https' ? next() : res.redirect('https://' + req.hostname + req.url);
+//     });
+// }
 app.use(express.static(__dirname));
-
-
-
-
-
 
 /*
  |--------------------------------------------------------------------------
