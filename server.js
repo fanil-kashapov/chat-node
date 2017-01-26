@@ -1,5 +1,4 @@
-var qs = require('querystring'),
-    http = require('http'),
+var http = require('http'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     express = require('express'),
@@ -10,7 +9,7 @@ var qs = require('querystring'),
     config = require('./server/config'),
     app = module.exports.app = express();
     
-app.use("/",router);
+
 app.set('port', process.env.NODE_PORT || 3000);
 app.set('host', process.env.NODE_IP || 'localhost');
 app.use(cors());
@@ -19,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname));
-
+app.use("/",router);
 /*
  |--------------------------------------------------------------------------
  | Start the Server

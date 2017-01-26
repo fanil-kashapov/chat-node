@@ -1,4 +1,5 @@
 var jwt = require('jwt-simple'),
+    qs = require('querystring'),
     request = require('request'),
     config = require('./config'),
     mongoose = require('mongoose'),

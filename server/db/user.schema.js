@@ -20,7 +20,7 @@ var mongoose = require('mongoose'),
     });
 
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function (next) {
     if (!this.isModified('password')) {
         return next();
     }
@@ -31,11 +31,5 @@ userSchema.pre('save', (next) => {
         });
     });
 });
-
-userSchema.methods.comparePassword = (password, done) => {
-    bcrypt.compare(password, this.password, (err, isMatch) => {
-        done(err, isMatch);
-    });
-};
 
 module.exports = userSchema;
