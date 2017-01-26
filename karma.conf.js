@@ -13,7 +13,7 @@ module.exports = function(config) {
             'node_modules/angular-mocks/angular-mocks.js',
             'src/app.js',
             'src/**/*.js',
-            'test/**/*test.js'
+            'src/**/*.test.js'
         ],
 
 
@@ -25,13 +25,13 @@ module.exports = function(config) {
         preprocessors: {
             'src/app.js': ['browserify'],
             'src/**/*.js': ['browserify'],
-            'test/**/*.test.js': ['browserify']
+            'src/**/*.test.js': ['browserify']
         },
 
         // configure jasmine.frameworks
         browserify: {
             debug: true,
-            transform: [['babelify', { presets: ['es2015'] /*, plugins: ['transform-object-assign', 'array-includes', 'es6-promise'] */}]]
+            transform: [['babelify', { presets: ['es2015'] , plugins: ['transform-object-assign'] }]]
         },
 
         // test results reporter to use

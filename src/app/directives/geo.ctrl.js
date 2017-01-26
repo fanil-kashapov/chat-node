@@ -1,6 +1,4 @@
-'use strict';
-
-class GeolocationController {
+export default class GeolocationController {
     constructor ($scope, $state, $window, $timeout) {
         this._$scope = $scope; 
         this._$state = $state;
@@ -16,18 +14,5 @@ class GeolocationController {
                 this.init();
             });
         }, 400);
-    }
-}
-
-GeolocationController.$inject = ['$scope', '$state', '$window', '$timeout'];
-
-export default class Geo {
-    constructor () {
-        this.restrict = 'AE';
-        this.replace = true;
-        this.controller = GeolocationController;
-        this.controllerAs = 'geoLoc';
-        this.bindToController = true;
-        this.template = '<span>{{geoLoc.speed}}</span>';
     }
 }

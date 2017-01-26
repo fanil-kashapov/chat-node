@@ -1,4 +1,4 @@
-class ImgApiController {
+export default class ImgApiController {
 
     constructor ($scope, $state, $window, $uibModal) {
         this._$scope = $scope;
@@ -21,7 +21,7 @@ class ImgApiController {
                 reader = new FileReader();
             reader.onload = ((evt) => {
                 let currentModalWindow = this._$uibModal.open({
-                    templateUrl: 'src/app/templates/tpl-imgapi.html',
+                    templateUrl: 'src/app/imgapi/img.popup.tpl.html',
                     controller: 'ImgPopupCtrl as imgPopCtrl',
                     resolve: {
                         img: () => evt.target.result
@@ -68,24 +68,5 @@ class ImgApiController {
                 }
             }
         }
-    }
-
-
-}
-
-ImgApiController.$inject = ['$scope', '$state', '$window', '$uibModal'];
-
-export default class ImgApi {
-    constructor() {
-        this.restrict = 'AE';
-        this.replace = true;
-        this.controller = ImgApiController;
-        this.controllerAs = 'fooz';
-        this.bindToController = true;
-        this.template = `<div ng-class="{'full-size': fooz.myImage != ''}">
-                            <label class="file-upload glyphicon glyphicon-paperclip" title="Sent Photo">
-                                <input type="file" id="fileInput"/>
-                            </label>
-                        </div>`;
     }
 }

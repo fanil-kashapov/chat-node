@@ -1,6 +1,6 @@
-import chatCtrl from '.././src/app/controllers/chatCtrl';
-import time from '.././src/app/services/time';
-import filters from '.././src/app/filters/filters';
+import chatCtrl from './chat.ctrl';
+import time from './../services/time';
+import filters from './../filters/filters';
 
 describe('socket', function () {
 

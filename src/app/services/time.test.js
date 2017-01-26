@@ -1,4 +1,4 @@
-import time from '.././src/app/services/time';
+import time from './time';
 
 describe('Time', function () {
 

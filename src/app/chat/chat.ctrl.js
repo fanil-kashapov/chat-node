@@ -1,5 +1,3 @@
-'use strict';
-
 export default class ChatCtrl {
     constructor (chatSocket, TimeAgo, Sounds, Filters) {
         this.chatSocket = chatSocket;
@@ -16,8 +14,6 @@ export default class ChatCtrl {
     }
 
     init () {
-        // TODO: We are using es2015 - with arrow functions we dont need this old hack (this = this).
-        // Please use .bind() for context binding
         this.chatSocket.on('message', (data) => {
             if (!data.data)
                 return;

@@ -13,7 +13,7 @@ const gulp = require('gulp'),
     html2js = require('gulp-html2js'),
 
     js_path = 'src/',
-    tmp_path = 'src/app/templates/',
+    tmp_path = 'src/app/../',
     less_path = 'content/less/';
 
 gulp.task('commonjs', function() {
@@ -38,7 +38,7 @@ gulp.task('commonjs', function() {
 });
 
 gulp.task('templates', function() {
-    return gulp.src(`${tmp_path}*.html`)
+    return gulp.src(`${tmp_path}*.tpl.html`)
         .pipe(html2js('templates.js', {
             adapter: 'angular',
             name: 'chatApp'
@@ -71,7 +71,7 @@ gulp.task('watch-less', function() {
 });
 
 gulp.task('watch-templates', function() {
-    return gulp.watch(`${tmp_path}*.html`, ['templates']);
+    return gulp.watch(`${tmp_path}*.tpl.html`, ['templates']);
 });
 
 gulp.task('default', ['commonjs', 'less', 'templates', 'vendor', 'watch-js', 'watch-less', 'watch-templates']);
