@@ -10,11 +10,10 @@ class GeolocationController {
     }
 
     init () {
-        let self = this;
-        self._$timeout(() => {
+        this._$timeout(() => {
             navigator.geolocation.getCurrentPosition((position) => {
-                self.speed = position.coords.speed;
-                self.init();
+                this.speed = position.coords.speed;
+                this.init();
             });
         }, 400);
     }

@@ -17,8 +17,8 @@ class ImgApiController {
     addEventListener () {
 
         angular.element(document.querySelector('#fileInput')).on('change', (evt) => {
-            var file = evt.currentTarget.files[0];
-            var reader = new FileReader();
+            let file = evt.currentTarget.files[0],
+                reader = new FileReader();
             reader.onload = ((evt) => {
                 let currentModalWindow = this._$uibModal.open({
                     templateUrl: 'src/app/templates/tpl-imgapi.html',
@@ -59,16 +59,12 @@ class ImgApiController {
                 try {
                     // Fallback if createObjectURL is not supported
                     let fileReader = new FileReader();
-                    fileReader.onload = function (event) {
+                    fileReader.onload = (event) => {
                         this.showPictureElement.src = event.target.result;
                     };
                     fileReader.readAsDataURL(file);
                 } catch (e) {
-                    // Display error message
-                    // var error = document.querySelector("#error");
-                    // if (error) {
                     console.log('Neither createObjectURL or FileReader are supported');
-                    //}
                 }
             }
         }

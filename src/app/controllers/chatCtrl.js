@@ -61,6 +61,7 @@ export default class ChatCtrl {
             this.chatSocket.on('room-sync', (data) => {
                 let messages = angular.fromJson(data.messages);
                 this.messages = this.Filters.uniqByProperty([...this.messages, ...messages], 'date');
+                localStorage.messages = angular.toJson(this.messages);
             });
 
             this.chatSocket.on('room-sync-init', () => {
@@ -70,7 +71,7 @@ export default class ChatCtrl {
     }
 
     sendMessage () {
-        var data = {
+        let data = {
             message: this.message,
             type: 'message',
             user: this.user,
